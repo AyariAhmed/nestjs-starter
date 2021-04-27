@@ -25,13 +25,14 @@ export class ClientRepository extends Repository<Client> {
     } = signupCredentialsDto;
 
     const address: Address = new Address(governorate, municipality, street, location);
-
+    let user :Client|null;
     const salt = await bcrypt.genSalt();
     const hashedPassword = await bcrypt.hash(password, salt);
 
-    const user: Client = new Client(firstName, lastName, email, hashedPassword, phone, birthdate, role, address);
+
     try {
       await address.save();
+      user = new Client(firstName, lastName, email, hashedPassword, phone, birthdate, role, address);
       await user.save();
     } catch (error) {
       if (error.code === "23505")

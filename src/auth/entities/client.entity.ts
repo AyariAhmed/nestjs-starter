@@ -50,9 +50,12 @@ export class Client extends BaseEntity {
   })
   role: UserRole;
 
-  @OneToOne(() => Address, (address) => address.client)
+  @OneToOne(() => Address, (address) => address.client,{eager : true})
   @JoinColumn()
   address: Address;
+
+  @Column()
+  addressId : number;
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;
