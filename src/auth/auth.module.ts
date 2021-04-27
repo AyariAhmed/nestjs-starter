@@ -7,6 +7,9 @@ import { JwtModule } from "@nestjs/jwt";
 import { PassportModule } from "@nestjs/passport";
 import { JwtStrategy } from "./jwt.strategy";
 import * as config from 'config';
+import * as dotenv from "dotenv";
+
+dotenv.config();
 
 const jwtConfig = config.get('jwt');
 
