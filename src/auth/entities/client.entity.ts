@@ -2,24 +2,24 @@ import {
   BaseEntity,
   Column,
   CreateDateColumn,
-  Entity, OneToOne,
+  Entity,
+  OneToOne,
   PrimaryGeneratedColumn,
   Unique,
-  UpdateDateColumn
-} from "typeorm";
-import { Address } from "./address.entity";
-import { JoinColumn } from "typeorm";
+  UpdateDateColumn,
+} from 'typeorm';
+import { Address } from './address.entity';
+import { JoinColumn } from 'typeorm';
 
 export enum UserRole {
-  ADMIN = "admin",
-  CLIENT = "client",
-  OWNER = "owner"
+  ADMIN = 'admin',
+  CLIENT = 'client',
+  OWNER = 'owner',
 }
 
 @Entity()
-@Unique(["email", "phone"])
+@Unique(['email', 'phone'])
 export class Client extends BaseEntity {
-
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -32,37 +32,45 @@ export class Client extends BaseEntity {
   @Column()
   email: string;
 
-  @Column("boolean", { default: false })
-  validated_email = false;
+  @Column('boolean', { default: false })
+  validated_email: boolean;
 
   @Column()
   password: string;
 
-  @Column("varchar", { length: 8 })
+  @Column('varchar', { length: 8 })
   phone: string;
 
-  @Column()
+  @Column({ type: 'date' })
   birthdate: string;
 
   @Column({
-    type: "enum",
+    type: 'enum',
     enum: UserRole,
-    default: UserRole.CLIENT
+    default: UserRole.CLIENT,
   })
   role: UserRole;
 
-  @OneToOne(() => Address, address => address.client)
+  @OneToOne(() => Address, (address) => address.client)
   @JoinColumn()
   address: Address;
 
-  @CreateDateColumn({ name: "created_at" })
+  @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;
 
-  @UpdateDateColumn({ name: "updated_at" })
+  @UpdateDateColumn({ name: 'updated_at' })
   UpdatedAt: Date;
 
-
-  constructor(firstName: string, lastName: string, email: string, password: string, phone: string, birthdate: string, role: UserRole, address: Address) {
+  constructor(
+    firstName: string,
+    lastName: string,
+    email: string,
+    password: string,
+    phone: string,
+    birthdate: string,
+    role: UserRole,
+    address: Address,
+  ) {
     super();
     this.firstName = firstName;
     this.lastName = lastName;
@@ -73,5 +81,4 @@ export class Client extends BaseEntity {
     this.role = role;
     this.address = address;
   }
-
 }
