@@ -6,7 +6,6 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { ClientRepository } from "./client.repository";
 import { Client } from "./entities/client.entity";
 import * as config from 'config';
-import { ConfigService } from "@nestjs/config";
 
 const jwtConfig = config.get('jwt');
 
@@ -16,7 +15,6 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
 
   constructor(
     @InjectRepository(ClientRepository) private userRepository: ClientRepository,
-    private configService: ConfigService
   ) {
 
     super({
