@@ -18,7 +18,6 @@ export enum UserRole {
 }
 
 @Entity()
-@Unique(['email', 'phone'])
 export class Client extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
@@ -29,7 +28,7 @@ export class Client extends BaseEntity {
   @Column()
   lastName: string;
 
-  @Column()
+  @Column({nullable:false, unique : true})
   email: string;
 
   @Column('boolean', { default: false })
@@ -38,7 +37,7 @@ export class Client extends BaseEntity {
   @Column()
   password: string;
 
-  @Column('varchar', { length: 8 })
+  @Column('varchar', { length: 8 ,unique: true,nullable : false})
   phone: string;
 
   @Column({ type: 'date' })
