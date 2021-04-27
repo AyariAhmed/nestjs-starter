@@ -9,7 +9,7 @@ import { LoginCredentialsDto } from "./dto/login-credentials.dto";
 @EntityRepository(Client)
 export class ClientRepository extends Repository<Client> {
 
-  async signup(signupCredentialsDto: SignupCredentialsDto): Promise<Object | void> {
+  async signup(signupCredentialsDto: SignupCredentialsDto): Promise<Client | null> {
     const {
       firstName,
       lastName,
@@ -38,12 +38,12 @@ export class ClientRepository extends Repository<Client> {
         throw new ConflictException("Email/Phone number already exists!");
       else throw new InternalServerErrorException();
     }
-    delete user.password;
+
     return user;
   }
 
 
-  async validateUserPassword(loginCredentialsDto: LoginCredentialsDto): Promise<Object | null> {
+  async validateUserPassword(loginCredentialsDto: LoginCredentialsDto): Promise<Client | null> {
     const { email_or_phone, password } = loginCredentialsDto;
 
     let user: Client | undefined;
@@ -57,7 +57,7 @@ export class ClientRepository extends Repository<Client> {
     }
 
       if (user && await bcrypt.compare(password, user.password)) {
-        delete user.password;
+
         return user;
       } else {
         return null;
