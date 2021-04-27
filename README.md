@@ -1,5 +1,5 @@
-### FoodiMap - REST API
-#### Postgres database creation : 
+# FoodiMap - REST API
+### Postgres database creation : 
 ```shell
 psql postgres postgres (password postgres)
 CREATE DATABASE foodimap;
