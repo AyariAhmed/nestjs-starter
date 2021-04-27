@@ -10,7 +10,7 @@ import { Client } from "./client.entity";
 @Entity()
 export class Address extends BaseEntity{
 
-  @PrimaryGeneratedColumn("uuid")
+  @PrimaryGeneratedColumn()
   id: number;
 
   @Column()

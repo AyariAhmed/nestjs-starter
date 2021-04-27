@@ -8,7 +8,7 @@ import {
   UpdateDateColumn
 } from "typeorm";
 import { Address } from "./address.entity";
-import { JoinColumn } from "typeorm/browser";
+import { JoinColumn } from "typeorm";
 
 export enum UserRole {
   ADMIN = "admin",
@@ -20,7 +20,7 @@ export enum UserRole {
 @Unique(["email", "phone"])
 export class Client extends BaseEntity {
 
-  @PrimaryGeneratedColumn("uuid")
+  @PrimaryGeneratedColumn()
   id: number;
 
   @Column()

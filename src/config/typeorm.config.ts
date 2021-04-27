@@ -7,6 +7,7 @@ export const typeOrmConfig : TypeOrmModuleOptions = {
   username : "foodimap_admin",
   password : "foodimap_admin",
   database : "foodimap",
+  // entities : ["dist/**/*.entity{.ts,.js}"],
   entities : [__dirname+ '/../**/*.entity.{ts,js}'],
   synchronize : true /* in production it must be set to false */
 }
