@@ -41,19 +41,19 @@ export class SignupCredentialsDto{
   ])
   role : UserRole;
 
-  @IsNotBlank({message : 'Password field can\'t be empty.'})
+  @IsNotBlank({message : 'governorate field can\'t be empty.'})
   @IsString()
   governorate : string;
 
-  @IsNotBlank({message : 'Password field can\'t be empty.'})
+  @IsNotBlank({message : 'municipality field can\'t be empty.'})
   @IsString()
   municipality : string;
 
-  @IsNotBlank({message : 'Password field can\'t be empty.'})
+  @IsNotBlank({message : 'street field can\'t be empty.'})
   @IsString()
   street : string;
 
-  @IsNotBlank({message : 'Password field can\'t be empty.'})
+  @IsNotBlank({message : 'location field can\'t be empty.'})
   @IsString()
   location : string;
 
