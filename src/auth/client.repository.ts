@@ -46,12 +46,22 @@ export class ClientRepository extends Repository<Client> {
   async validateUserPassword(loginCredentialsDto: LoginCredentialsDto): Promise<Object | null> {
     const { email_or_phone, password } = loginCredentialsDto;
 
-    const user: User | undefined = await this.findOne({ username });
+    let user: Client | undefined;
 
-    if (user && await bcrypt.compare(password, user.password)) {
-      delete user.password;
-      return user;
-    } else return null;
+    if (this.isEmail(email_or_phone)){
+      user = await this.findOne({ email : email_or_phone });
+    }else if(this.isPhone(email_or_phone)){
+      user = await this.findOne({phone : email_or_phone});
+    }else {
+      return null;
+    }
+
+      if (user && await bcrypt.compare(password, user.password)) {
+        delete user.password;
+        return user;
+      } else {
+        return null;
+      }
 
   }
 
