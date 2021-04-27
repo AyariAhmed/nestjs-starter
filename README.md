@@ -1,3 +1,8 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo_text.svg" width="320" alt="Nest Logo" /></a>
-</p>
+### FoodiMap - REST API
+#### Postgres database creation : 
+```shell
+psql postgres postgres (password postgres)
+CREATE DATABASE foodimap;
+CREATE ROLE foodimap_admin WITH LOGIN PASSWORD 'foodimap_admin' CREATEDB;
+GRANT ALL PRIVILEGES ON DATABASE foodimap TO foodimap_admin;
+```
