@@ -5,6 +5,7 @@ import {
   PrimaryGeneratedColumn,
 } from "typeorm";
 import { Client } from "./client.entity";
+import { Owner } from "./owner.entity";
 
 
 @Entity()
@@ -27,6 +28,9 @@ export class Address extends BaseEntity{
 
   @OneToOne(() => Client,client => client.address)
   client : Client;
+
+  @OneToOne(() => Owner,owner => owner.address)
+  owner : Owner;
 
 
   constructor(governorate : string,municipality : string,street : string,location : string) {

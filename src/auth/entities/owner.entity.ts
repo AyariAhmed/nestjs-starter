@@ -9,15 +9,11 @@ import {
 } from 'typeorm';
 import { Address } from './address.entity';
 import { JoinColumn } from 'typeorm';
+import { UserRole } from "./client.entity";
 
-export enum UserRole {
-  ADMIN = 'admin',
-  CLIENT = 'client',
-  OWNER = 'owner',
-}
 
 @Entity()
-export class Client extends BaseEntity {
+export class Owner extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -39,8 +35,9 @@ export class Client extends BaseEntity {
   @Column('varchar', { length: 8 ,unique: true,nullable : false})
   phone: string;
 
-  @Column({ type: 'date' })
-  birthdate: string;
+  @Column()
+  restaurant_name : string;
+  //TODO : Must be changed to a relation with an entity
 
   @Column({
     type: 'enum',
@@ -49,7 +46,7 @@ export class Client extends BaseEntity {
   })
   role: UserRole;
 
-  @OneToOne(() => Address, (address) => address.client,{eager : true})
+  @OneToOne(() => Address, (address) => address.owner,{eager : true})
   @JoinColumn()
   address: Address;
 
@@ -66,9 +63,9 @@ export class Client extends BaseEntity {
     firstName: string,
     lastName: string,
     email: string,
+    restaurant_name : string,
     password: string,
     phone: string,
-    birthdate: string,
     role: UserRole,
     address: Address,
   ) {
@@ -76,9 +73,9 @@ export class Client extends BaseEntity {
     this.firstName = firstName;
     this.lastName = lastName;
     this.email = email;
+    this.restaurant_name = restaurant_name;
     this.password = password;
     this.phone = phone;
-    this.birthdate = birthdate;
     this.role = role;
     this.address = address;
   }
