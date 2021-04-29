@@ -18,7 +18,6 @@ export class ClientRepository extends Repository<Client> {
       password,
       phone,
       birthdate,
-      role,
       governorate,
       municipality,
       street,
@@ -33,7 +32,7 @@ export class ClientRepository extends Repository<Client> {
 
     try {
       await address.save();
-      user = new Client(firstName, lastName, email, hashedPassword, phone, birthdate, role, address);
+      user = new Client(firstName, lastName, email, hashedPassword, phone, birthdate,  address);
       await user.save();
     } catch (error) {
       if (error.code === "23505")

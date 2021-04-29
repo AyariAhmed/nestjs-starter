@@ -1,4 +1,5 @@
-import { UserRole } from "./entities/client.entity";
+import { UserRole } from "./entities/roles.enum";
+
 
 export interface JwtPayload{
   email : string;

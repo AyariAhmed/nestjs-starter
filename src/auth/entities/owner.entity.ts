@@ -3,13 +3,13 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
   OneToOne,
   PrimaryGeneratedColumn,
-  UpdateDateColumn,
-} from 'typeorm';
-import { Address } from './address.entity';
-import { JoinColumn } from 'typeorm';
-import { UserRole } from "./client.entity";
+  UpdateDateColumn
+} from "typeorm";
+import { Address } from "./address.entity";
+import { UserRole } from "./roles.enum";
 
 
 @Entity()
@@ -42,7 +42,7 @@ export class Owner extends BaseEntity {
   @Column({
     type: 'enum',
     enum: UserRole,
-    default: UserRole.CLIENT,
+    default: UserRole.OWNER,
   })
   role: UserRole;
 
@@ -66,7 +66,6 @@ export class Owner extends BaseEntity {
     restaurant_name : string,
     password: string,
     phone: string,
-    role: UserRole,
     address: Address,
   ) {
     super();
@@ -76,7 +75,7 @@ export class Owner extends BaseEntity {
     this.restaurant_name = restaurant_name;
     this.password = password;
     this.phone = phone;
-    this.role = role;
+    this.role = UserRole.OWNER;
     this.address = address;
   }
 }

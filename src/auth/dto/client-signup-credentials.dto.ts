@@ -9,10 +9,10 @@ import {
   Validate
 } from "class-validator";
 import { IsNotBlank } from "../../custom-validators/isNotBlank.validator";
-import { UserRole } from "../entities/client.entity";
 import { pgDateFormat } from "../../custom-validators/pgDateFormat.validator";
 import { ValidGovernorate } from "../../custom-validators/governorate.validator";
 import { ValidMunicipality } from "../../custom-validators/municipality.validator";
+import { UserRole } from "../entities/roles.enum";
 
 
 export class ClientSignupCredentialsDto {
@@ -47,11 +47,6 @@ export class ClientSignupCredentialsDto {
 
   @pgDateFormat()
   birthdate: string;
-
-  @IsIn([
-    UserRole.ADMIN, UserRole.CLIENT, UserRole.OWNER
-  ])
-  role: UserRole;
 
   @IsNotBlank({ message: "governorate field can't be empty." })
   @Validate(ValidGovernorate,{ message: "governorate is not supported!" })

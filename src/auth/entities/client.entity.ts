@@ -9,12 +9,7 @@ import {
 } from 'typeorm';
 import { Address } from './address.entity';
 import { JoinColumn } from 'typeorm';
-
-export enum UserRole {
-  ADMIN = 'admin',
-  CLIENT = 'client',
-  OWNER = 'owner',
-}
+import { UserRole } from "./roles.enum";
 
 @Entity()
 export class Client extends BaseEntity {
@@ -69,7 +64,6 @@ export class Client extends BaseEntity {
     password: string,
     phone: string,
     birthdate: string,
-    role: UserRole,
     address: Address,
   ) {
     super();
@@ -79,7 +73,7 @@ export class Client extends BaseEntity {
     this.password = password;
     this.phone = phone;
     this.birthdate = birthdate;
-    this.role = role;
+    this.role = UserRole.CLIENT;
     this.address = address;
   }
 }

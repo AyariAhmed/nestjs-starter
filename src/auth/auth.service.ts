@@ -4,8 +4,9 @@ import { ClientRepository } from "./repositories/client.repository";
 import { ClientSignupCredentialsDto } from "./dto/client-signup-credentials.dto";
 import { LoginCredentialsDto } from "./dto/login-credentials.dto";
 import { JwtService } from "@nestjs/jwt";
-import { Client, UserRole } from "./entities/client.entity";
+import { Client } from "./entities/client.entity";
 import { JwtPayload } from "./jwt-payload.interface";
+import { UserRole } from "./entities/roles.enum";
 
 @Injectable()
 export class AuthService {
