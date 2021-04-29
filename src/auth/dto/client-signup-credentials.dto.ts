@@ -5,20 +5,17 @@ import {
   MinLength,
   Length,
   IsIn,
-  ValidateIf,
-  MATCHES,
   Matches,
   Validate
 } from "class-validator";
 import { IsNotBlank } from "../../custom-validators/isNotBlank.validator";
 import { UserRole } from "../entities/client.entity";
 import { pgDateFormat } from "../../custom-validators/pgDateFormat.validator";
-import GovMunicip from "../entities/SupportedCities";
 import { ValidGovernorate } from "../../custom-validators/governorate.validator";
 import { ValidMunicipality } from "../../custom-validators/municipality.validator";
 
 
-export class SignupCredentialsDto {
+export class ClientSignupCredentialsDto {
 
   @IsNotBlank()
   @IsString()

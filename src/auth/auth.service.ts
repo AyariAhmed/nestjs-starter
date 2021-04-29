@@ -1,7 +1,7 @@
 import { Injectable, UnauthorizedException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { ClientRepository } from "./client.repository";
-import { SignupCredentialsDto } from "./dto/signup-credentials.dto";
+import { ClientRepository } from "./repositories/client.repository";
+import { ClientSignupCredentialsDto } from "./dto/client-signup-credentials.dto";
 import { LoginCredentialsDto } from "./dto/login-credentials.dto";
 import { JwtService } from "@nestjs/jwt";
 import { Client, UserRole } from "./entities/client.entity";
@@ -16,7 +16,7 @@ export class AuthService {
   ) {
   }
 
-  async signup(signupCredentialsDto : SignupCredentialsDto) : Promise<{ accessToken : string}|void>{
+  async signup(signupCredentialsDto : ClientSignupCredentialsDto) : Promise<{ accessToken : string}|void>{
     const newUser : Client|null = await this.clientRepository.signup(signupCredentialsDto);
     if(newUser)
       return this.signJwt(newUser.email,newUser.role);

@@ -1,15 +1,16 @@
 import { EntityRepository, Repository } from "typeorm";
-import { Client } from "./entities/client.entity";
+import { Client } from "../entities/client.entity";
 import * as bcrypt from "bcrypt";
-import { SignupCredentialsDto } from "./dto/signup-credentials.dto";
-import { Address } from "./entities/address.entity";
+import { ClientSignupCredentialsDto } from "../dto/client-signup-credentials.dto";
+import { Address } from "../entities/address.entity";
 import { ConflictException, InternalServerErrorException } from "@nestjs/common";
-import { LoginCredentialsDto } from "./dto/login-credentials.dto";
+import { LoginCredentialsDto } from "../dto/login-credentials.dto";
+import { isEmail, isPhone } from "../helpers";
 
 @EntityRepository(Client)
 export class ClientRepository extends Repository<Client> {
 
-  async signup(signupCredentialsDto: SignupCredentialsDto): Promise<Client | null> {
+  async signup(signupCredentialsDto: ClientSignupCredentialsDto): Promise<Client | null> {
     const {
       firstName,
       lastName,
@@ -49,9 +50,9 @@ export class ClientRepository extends Repository<Client> {
 
     let user: Client | undefined;
 
-    if (this.isEmail(email_or_phone)){
+    if (isEmail(email_or_phone)){
       user = await this.findOne({ email : email_or_phone });
-    }else if(this.isPhone(email_or_phone)){
+    }else if(isPhone(email_or_phone)){
       user = await this.findOne({phone : email_or_phone});
     }else {
       return null;
@@ -66,15 +67,6 @@ export class ClientRepository extends Repository<Client> {
 
   }
 
-  private isEmail(email) {
-    const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return re.test(String(email).toLowerCase());
-  }
-
-  private isPhone(phone) {
-    const re = /^\d{8}$/;
-    return re.test(phone);
-  }
 
 
 }
