@@ -37,7 +37,7 @@ export class Owner extends BaseEntity {
 
   @Column()
   restaurant_name : string;
-  //TODO : Must be changed to a relation with an entity
+  //TODO : Must be changed to a relation with a restaurant entity
 
   @Column({
     type: 'enum',

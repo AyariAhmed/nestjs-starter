@@ -4,7 +4,6 @@ import {
   MaxLength,
   MinLength,
   Length,
-  IsIn,
   Matches,
   Validate
 } from "class-validator";
@@ -12,7 +11,7 @@ import { IsNotBlank } from "../../custom-validators/isNotBlank.validator";
 import { pgDateFormat } from "../../custom-validators/pgDateFormat.validator";
 import { ValidGovernorate } from "../../custom-validators/governorate.validator";
 import { ValidMunicipality } from "../../custom-validators/municipality.validator";
-import { UserRole } from "../entities/roles.enum";
+
 
 
 export class ClientSignupCredentialsDto {

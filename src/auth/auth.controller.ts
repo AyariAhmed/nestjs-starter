@@ -13,12 +13,12 @@ export class AuthController {
 
   @Post('signup')
   async signup(@Body(ValidationPipe) signupCredentialsDto:ClientSignupCredentialsDto) : Promise<{ accessToken : string} | void>{
-    return this.authService.signup(signupCredentialsDto);
+    return this.authService.clientSignup(signupCredentialsDto);
   }
 
   @Post('login')
   async login(@Body(ValidationPipe) loginCredentialsDto:LoginCredentialsDto) : Promise<{ accessToken : string} | void>{
-    return this.authService.login(loginCredentialsDto);
+    return this.authService.clientLogin(loginCredentialsDto);
   }
 
   @Get('/test')

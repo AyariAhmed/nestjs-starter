@@ -8,6 +8,7 @@ import { PassportModule } from "@nestjs/passport";
 import { JwtStrategy } from "./jwt.strategy";
 import * as config from 'config';
 import * as dotenv from "dotenv";
+import { OwnerRepository } from "./repositories/owner.repository";
 
 dotenv.config();
 
@@ -15,7 +16,7 @@ const jwtConfig = config.get('jwt');
 
 @Module({
   imports : [
-    TypeOrmModule.forFeature([ClientRepository]),
+    TypeOrmModule.forFeature([ClientRepository,OwnerRepository]),
     JwtModule.register({
     secret : process.env.JWT_SECRET || jwtConfig.secret,
       signOptions : {
