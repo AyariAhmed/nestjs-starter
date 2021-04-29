@@ -1,9 +1,8 @@
-import { Body, Controller, Get, Post, Req, UseGuards, ValidationPipe } from "@nestjs/common";
+import { Body, Controller, Get, Post, UseGuards, ValidationPipe } from "@nestjs/common";
 import { AuthService } from "./auth.service";
 import { ClientSignupCredentialsDto } from "./dto/client-signup-credentials.dto";
 import { LoginCredentialsDto } from "./dto/login-credentials.dto";
 import { GetUser } from "./decorators/get-user.decorator";
-import { AuthGuard } from "@nestjs/passport";
 import { OwnerSignupCredentialsDto } from "./dto/owner-signup-credentials.dto";
 import { JwtAuthGuard } from "./guards/jwt-guard";
 import { RolesGuard } from "./guards/roles.guard";
@@ -37,7 +36,7 @@ export class AuthController {
   }
 
   @Get('/test')
-  @hasRoles(UserRole.OWNER)
+  @hasRoles(UserRole.CLIENT,UserRole.ADMIN)
   @UseGuards(JwtAuthGuard,RolesGuard)
   testUserExtraction(@GetUser() client){
     return client;
