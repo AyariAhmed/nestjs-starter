@@ -21,40 +21,55 @@ export class AuthService {
   ) {
   }
 
-  async clientSignup(signupCredentialsDto : ClientSignupCredentialsDto) : Promise<{ accessToken : string}|void>{
+  async clientSignup(signupCredentialsDto : ClientSignupCredentialsDto) : Promise<{ accessToken : string , client : Client}|null>{
     const newUser : Client|null = await this.clientRepository.signup(signupCredentialsDto);
-    if(newUser)
-      return this.signJwt(newUser.email,newUser.role);
+    if(newUser){
+      const accessToken = await this.signJwt(newUser.email,newUser.role);
+      return {
+        accessToken : accessToken,
+        client : newUser
+      }
+    }
+
   }
 
-  async clientLogin(loginCredentialsDto:LoginCredentialsDto) : Promise<{ accessToken : string} | null>{
+  async clientLogin(loginCredentialsDto:LoginCredentialsDto) : Promise<{ accessToken : string, client : Client} | null>{
     const user : Client|null = await this.clientRepository.validateUserPassword(loginCredentialsDto);
     if(!user){
       throw new UnauthorizedException('Invalid Credentials');
     }
-    return this.signJwt(user.email,user.role);
+    const accessToken = await this.signJwt(user.email,user.role);
+    return {
+      accessToken,client:user
+    }
 
   }
 
-  async ownerSignup(signupCredentialsDto : OwnerSignupCredentialsDto) : Promise<{ accessToken : string}|void>{
+  async ownerSignup(signupCredentialsDto : OwnerSignupCredentialsDto) : Promise<{ accessToken : string,owner : Owner}|null>{
     const newUser : Owner|null = await this.ownerRepository.signup(signupCredentialsDto);
-    if(newUser)
-      return this.signJwt(newUser.email,newUser.role);
+    if(newUser){
+      const accessToken = await this.signJwt(newUser.email,newUser.role);
+      return {
+        accessToken,owner : newUser
+      }
+    }
   }
 
-  async ownerLogin(loginCredentialsDto:LoginCredentialsDto) : Promise<{ accessToken : string} | null>{
+  async ownerLogin(loginCredentialsDto:LoginCredentialsDto) : Promise<{ accessToken : string,owner : Owner} | null>{
     const user : Owner|null = await this.ownerRepository.validateUserPassword(loginCredentialsDto);
     if(!user){
       throw new UnauthorizedException('Invalid Credentials');
     }
-    return this.signJwt(user.email,user.role);
+    const accessToken = await this.signJwt(user.email,user.role);
+    return {
+      accessToken,owner:user
+    }
 
   }
 
-  private async signJwt(email : string,role : UserRole) : Promise<{ accessToken : string}>{
+  private async signJwt(email : string,role : UserRole) : Promise<string>{
   const payload : JwtPayload = {email,role};
-  const accessToken : string= await this.jwtService.sign(payload);
-  return {accessToken};
+    return this.jwtService.sign(payload);
 }
 
 }

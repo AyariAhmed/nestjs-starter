@@ -8,6 +8,8 @@ import { JwtAuthGuard } from "./guards/jwt-guard";
 import { RolesGuard } from "./guards/roles.guard";
 import { hasRoles } from "./decorators/roles.decorator";
 import { UserRole } from "./entities/roles.enum";
+import { Owner } from "./entities/owner.entity";
+import { Client } from "./entities/client.entity";
 
 @Controller('auth')
 export class AuthController {
@@ -16,22 +18,22 @@ export class AuthController {
   }
 
   @Post('client/signup')
-  async clientSignup(@Body(ValidationPipe) signupCredentialsDto:ClientSignupCredentialsDto) : Promise<{ accessToken : string} | void>{
+  async clientSignup(@Body(ValidationPipe) signupCredentialsDto:ClientSignupCredentialsDto) : Promise<{ accessToken : string , client : Client}|void>{
     return this.authService.clientSignup(signupCredentialsDto);
   }
 
   @Post('client/login')
-  async clientLogin(@Body(ValidationPipe) loginCredentialsDto:LoginCredentialsDto) : Promise<{ accessToken : string} | void>{
+  async clientLogin(@Body(ValidationPipe) loginCredentialsDto:LoginCredentialsDto) : Promise<{ accessToken : string , client : Client}|void>{
     return this.authService.clientLogin(loginCredentialsDto);
   }
 
   @Post('owner/signup')
-  async ownerSignup(@Body(ValidationPipe) signupCredentialsDto:OwnerSignupCredentialsDto) : Promise<{ accessToken : string} | void>{
+  async ownerSignup(@Body(ValidationPipe) signupCredentialsDto:OwnerSignupCredentialsDto) : Promise<{ accessToken : string;owner : Owner} | void>{
     return this.authService.ownerSignup(signupCredentialsDto);
   }
 
   @Post('owner/login')
-  async login(@Body(ValidationPipe) loginCredentialsDto:LoginCredentialsDto) : Promise<{ accessToken : string} | void>{
+  async login(@Body(ValidationPipe) loginCredentialsDto:LoginCredentialsDto) : Promise<{ accessToken : string,owner : Owner} | void>{
     return this.authService.ownerLogin(loginCredentialsDto);
   }
 
