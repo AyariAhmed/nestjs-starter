@@ -42,7 +42,7 @@ export class OwnerSignupCredentialsDto {
   @Length(8, 8, { message: "Phone number must be 8 characters long!" })
   phone: string;
 
-  @IsNotBlank({ message: "Password field can't be empty." })
+  @IsNotBlank({ message: "Restaurant name field can't be empty." })
   @IsString()
   restaurant_name : string;
 
