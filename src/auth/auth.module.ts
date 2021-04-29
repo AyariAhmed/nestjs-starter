@@ -5,10 +5,12 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 import { ClientRepository } from "./repositories/client.repository";
 import { JwtModule } from "@nestjs/jwt";
 import { PassportModule } from "@nestjs/passport";
-import { JwtStrategy } from "./jwt.strategy";
+import { JwtStrategy } from "./guards/jwt.strategy";
 import * as config from 'config';
 import * as dotenv from "dotenv";
 import { OwnerRepository } from "./repositories/owner.repository";
+import { RolesGuard } from "./guards/roles.guard";
+import { JwtAuthGuard } from "./guards/jwt-guard";
 
 dotenv.config();
 
@@ -26,7 +28,7 @@ const jwtConfig = config.get('jwt');
     PassportModule.register({defaultStrategy : 'jwt'})
   ],
   controllers: [AuthController],
-  providers: [AuthService,JwtStrategy],
+  providers: [AuthService,JwtStrategy,RolesGuard,JwtAuthGuard],
   exports : [JwtStrategy,PassportModule]
 })
 export class AuthModule {}

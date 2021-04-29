@@ -2,9 +2,13 @@ import { Body, Controller, Get, Post, Req, UseGuards, ValidationPipe } from "@ne
 import { AuthService } from "./auth.service";
 import { ClientSignupCredentialsDto } from "./dto/client-signup-credentials.dto";
 import { LoginCredentialsDto } from "./dto/login-credentials.dto";
-import { GetUser } from "./get-user.decorator";
+import { GetUser } from "./decorators/get-user.decorator";
 import { AuthGuard } from "@nestjs/passport";
 import { OwnerSignupCredentialsDto } from "./dto/owner-signup-credentials.dto";
+import { JwtAuthGuard } from "./guards/jwt-guard";
+import { RolesGuard } from "./guards/roles.guard";
+import { hasRoles } from "./decorators/roles.decorator";
+import { UserRole } from "./entities/roles.enum";
 
 @Controller('auth')
 export class AuthController {
@@ -33,7 +37,8 @@ export class AuthController {
   }
 
   @Get('/test')
-  @UseGuards(AuthGuard())
+  @hasRoles(UserRole.OWNER)
+  @UseGuards(JwtAuthGuard,RolesGuard)
   testUserExtraction(@GetUser() client){
     return client;
   }

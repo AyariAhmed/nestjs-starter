@@ -1,14 +1,14 @@
 import { PassportStrategy } from "@nestjs/passport";
 import { ExtractJwt, Strategy } from "passport-jwt";
 import { Injectable, UnauthorizedException } from "@nestjs/common";
-import { JwtPayload } from "./jwt-payload.interface";
+import { JwtPayload } from "../jwt-payload.interface";
 import { InjectRepository } from "@nestjs/typeorm";
-import { ClientRepository } from "./repositories/client.repository";
-import { Client } from "./entities/client.entity";
+import { ClientRepository } from "../repositories/client.repository";
+import { Client } from "../entities/client.entity";
 import * as config from "config";
-import { OwnerRepository } from "./repositories/owner.repository";
-import { UserRole } from "./entities/roles.enum";
-import { Owner } from "./entities/owner.entity";
+import { OwnerRepository } from "../repositories/owner.repository";
+import { UserRole } from "../entities/roles.enum";
+import { Owner } from "../entities/owner.entity";
 
 const jwtConfig = config.get('jwt');
 
@@ -22,7 +22,8 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   ) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-      secretOrKey: process.env.JWT_SECRET || jwtConfig.secret
+      secretOrKey: process.env.JWT_SECRET || jwtConfig.secret,
+      ignoreExpiration : false,
     });
   }
 
