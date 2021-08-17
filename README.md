@@ -1,11 +1,4 @@
-# FoodiMap - REST API
-### Postgres database creation : 
-```shell
-psql postgres postgres (password postgres)
-CREATE DATABASE foodimap;
-CREATE ROLE foodimap_admin WITH LOGIN PASSWORD 'foodimap_admin' CREATEDB;
-GRANT ALL PRIVILEGES ON DATABASE foodimap TO foodimap_admin;
-```
+# Starter Nestjs project with authentication and role based authorization
 
 ### Routes guarding based on roles
 * import AuthModule in the module where routes guarding is being used
